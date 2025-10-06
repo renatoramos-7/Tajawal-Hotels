@@ -1,23 +1,67 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Tajawal-Hotels
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+<br />This is only a sample project and can be modified every time it needs. 
+<br />After All nothing are wrote in the stones.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+# Implementation Details
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+MVP pattern with Repository Pattern and inspired by the Clean.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+- Model View Presenter pattern (MVP)
+- Repository Pattern
+- Reactive Programming with RxJava2
+- Responsive UI
+- Retrofit + GSON
+- Material Design pattern in available time
+- Glide for image loading
+- Dagger 2 for Dependency injection 
+- Google maps
+- Mockito for Unit Testing
+- Rotation Support
+- Focus in performance
+
+**Three main packages: Commons, Data and Presentation.**
+
+- **Common:** Responsible for all Commons files in project.
+- **Data:** Responsible for all  API requests, database access, connections, persistence things, mapped entities and Repository pattern.
+- **Presentation - Ui (View + Presenter):** Responsible views and extencions. It is also responsible for the presentation (Presenter).
+
+
+### Model View Presenter
+
+Model, View and Presenter, Unit Tests and single responsibility layers.
+
+### UX / UI
+
+Material Design pattern in available time.
+
+<img src="https://github.com/Ckdeveloper/Tajawal-Hotels/blob/master/design/Screenshot1.png" width="300">
+<img src="https://github.com/Ckdeveloper/Tajawal-Hotels/blob/master/design/Screenshot2.png" width="300">
+<img src="https://github.com/Ckdeveloper/Tajawal-Hotels/blob/master/design/Screenshot3.png" width="300">
+<img src="https://github.com/Ckdeveloper/Tajawal-Hotels/blob/master/design/Screenshot4.png" width="300">
+<img src="https://github.com/Ckdeveloper/Tajawal-Hotels/blob/master/design/Screenshot5.png" width="300">
+
+### Libraries
+
+1. **RxJava2 + RxAndroid2:** This is the best way to work asynchronously and maintain the application scalable.
+2. **Retrofit2 + OkHttp:** For Network Request and Rx integration.
+3. **Kotlin Extensions:** For view binding.
+4. **Glide:** For image loading.
+5. **Gson:** Retrofit integration for deserialize.
+6. **Dagger2:** For dependency injection.
+7. **PaperDb:** For cache.
+
+### Installing
+Just have the project and clean and build in your Android Studio
+
+## Versioning
+
+We are using [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://https://github.com/Ckdeveloper/Tajawal-Hotels). 
+
+## Author
+
+* **Renato Ramos** - *Initial work*
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
