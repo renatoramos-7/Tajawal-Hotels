@@ -2,7 +2,7 @@ package com.renatoramos.tajawal.presentation.ui.hotel.list.adapters
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import com.renatoramos.tajawal.R
 import com.renatoramos.tajawal.common.extensions.inflate
