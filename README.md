@@ -1,20 +1,21 @@
 # Tajawal Hotels
 
-Portfolio-ready Android sample focused on clean separation of concerns, pragmatic engineering decisions, and a classic MVP implementation that remains easy to explain in interviews.
+Portfolio-ready Android sample focused on pragmatic modernization, clear separation of responsibilities, and a classic MVP implementation that was intentionally preserved instead of being rewritten for trend alignment.
 
-This app presents a small hotel browsing experience: users can load a list of hotels, open a details screen with pricing and location data, and inspect the main hotel image in a dedicated viewer. The codebase intentionally preserves its original architectural style instead of being retrofitted into a newer pattern, which makes it a good example of working effectively within an existing Android codebase rather than rewriting it unnecessarily.
+This app presents a compact hotel browsing experience: users can load a list of hotels, open a details screen with pricing and location data, and inspect the main hotel image in a dedicated viewer. The codebase has been modernized where that improves maintainability and compatibility, while deliberately keeping its original MVP + Repository structure. That makes it a practical example of evolving a real Android codebase without overstating its scope or forcing an architectural rewrite.
 
 ## Why This Project Is Worth Reviewing
 
 This repository is a strong conversation piece for recruiters and hiring teams because it demonstrates:
 
+- deliberate modernization without discarding a working architecture
 - contract-driven MVP screens
 - a Repository layer coordinating remote and local data access
 - Dagger 2 dependency injection in a real app flow
 - RxJava-based asynchronous work
 - lightweight caching for faster repeat access
-- presenter-focused unit testing
-- thoughtful modernization opportunities without architecture churn
+- unit tests covering presenter behavior and repository behavior
+- compatibility-minded maintenance of a legacy Android stack
 
 ## App Goal
 
@@ -59,6 +60,16 @@ That smaller feature set helps the architecture stay visible. Reviewers can quic
 - Mockito Kotlin
 - Android instrumentation test scaffolding with Espresso
 
+## Compatibility and Maintenance Positioning
+
+This repository is intentionally documented as a well-maintained legacy Android sample, not as a fully migrated modern Android template.
+
+- MVP was kept on purpose because it still matches the current app size and keeps responsibilities explicit
+- compatibility remains anchored in the existing stack, including `minSdkVersion 19`, `targetSdkVersion 27`, and the pre-AndroidX support library baseline already present in the codebase
+- modernization is framed as incremental maintenance, not as a claim that the project already reflects the latest Android platform conventions
+
+That positioning matters for accuracy: the repository shows sound engineering judgment, not cosmetic modernization claims.
+
 ## Architecture
 
 Architecture diagrams now live in [`docs/architecture/README.md`](docs/architecture/README.md) so the repository keeps visual documentation close to the code in a text-based, review-friendly format.
@@ -72,7 +83,7 @@ The application follows a classic Android MVP approach:
 - `Presenter` classes coordinate screen behavior and UI decisions
 - `HotelsRepository` abstracts data retrieval and local persistence details from the presentation layer
 
-This structure keeps Android framework concerns concentrated in the View layer while leaving orchestration in presenters and data access inside the repository/provider stack.
+This structure keeps Android framework concerns concentrated in the View layer while leaving orchestration in presenters and data access inside the repository/provider stack. In practice, this is the main architectural strength of the project: responsibilities stay separated, readable, and testable.
 
 ### Data Flow
 
@@ -162,13 +173,14 @@ The image viewer offers a focused visual detail flow and rounds out the app with
 
 ## Testing Strategy
 
-The current testing approach focuses on presenter behavior, which matches the architecture well because presenters hold the orchestration logic.
+The current testing approach follows the same separation of responsibilities as the production code. Most coverage sits around presenters, and there is also repository-level validation for the list flow.
 
 Covered tests include:
 
 - `HotelListPresenterTest`
 - `DetailsPresenterTest`
 - `ImageViewerPresenterTest`
+- `HotelsRepositoryTest`
 
 These tests verify concerns such as:
 
@@ -178,7 +190,7 @@ These tests verify concerns such as:
 - error propagation
 - navigation and image-opening triggers
 
-This is a sensible trade-off for an MVP codebase: most business-facing UI behavior can be validated without booting Android framework components.
+This is a sensible trade-off for an MVP codebase: most business-facing UI behavior can be validated without booting Android framework components, while the repository test adds confidence around remote/local data coordination.
 
 ## Screenshots
 
@@ -237,7 +249,7 @@ This project is intentionally presented as a well-structured legacy Android samp
 
 ## Modernization Notes
 
-The goal of this repository is not to migrate architecture. If this codebase were evolved today, the most responsible path would be incremental modernization while preserving MVP + Repository:
+The goal of this repository is not to migrate architecture. The most responsible path remains incremental modernization while preserving MVP + Repository:
 
 1. Migrate Support Libraries to AndroidX.
 2. Upgrade Gradle, Kotlin, and library versions.
@@ -257,6 +269,8 @@ This repository is best read as evidence of:
 - ability to keep responsibilities separated and testable
 - experience with dependency injection, caching, networking, and reactive flows
 - judgment to modernize a codebase progressively instead of defaulting to large migrations
+
+For portfolio purposes, that leaves the repository in a stronger place: the project now presents a clearer engineering narrative, documents its architectural choices honestly, and highlights maintainability, compatibility, and testing discipline without promising capabilities the code does not implement.
 
 ## License
 
