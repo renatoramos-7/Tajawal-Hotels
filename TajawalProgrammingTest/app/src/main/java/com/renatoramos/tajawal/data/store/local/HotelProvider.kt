@@ -7,7 +7,7 @@ import io.reactivex.Observable
 
 class HotelProvider {
 
-    private val TAG = HotelProvider::class.java!!.simpleName
+    private val TAG = HotelProvider::class.java.simpleName
 
     fun add(hotels: List<HotelModel>): Observable<List<HotelModel>> {
         return Observable.create<List<HotelModel>> { e ->
@@ -38,10 +38,9 @@ class HotelProvider {
         val hotelList = Paper.book().read<List<HotelModel>>(TAG)
 
         return if (hotelList != null) {
-             Observable.fromIterable(hotelList).filter { hotel -> hotel.hotelId == id }.map{ customer -> customer }
+             Observable.fromIterable(hotelList).filter { hotel -> hotel.hotelId == id }
          } else {
-            val hotelModel: HotelModel? = null
-            Observable.just<HotelModel>(hotelModel)
+            Observable.empty()
         }
     }
 

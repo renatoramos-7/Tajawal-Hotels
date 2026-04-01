@@ -10,6 +10,7 @@ class HotelListPresenter @Inject constructor(view: HotelListContract.View, priva
     : BasePresenter<HotelListContract.View>(view), HotelListContract.Presenter {
 
     private var hotelModelList: List<HotelModel> = listOf()
+    private val hotelListUnavailableMessage = "Unable to load hotel list."
 
     override fun onStart() {
         view.setupRecyclerView()
@@ -22,8 +23,9 @@ class HotelListPresenter @Inject constructor(view: HotelListContract.View, priva
         addDisposable(hotelsRepository
                 .getHotelList()
                 .subscribe(
-                        { list -> onSuccess(list!!) },
-                        { throwable -> onError(throwable) }
+                        { list -> onSuccess(list) },
+                        { throwable -> onError(throwable) },
+                        { onError(IllegalStateException(hotelListUnavailableMessage)) }
                 ))
     }
 
@@ -40,7 +42,8 @@ class HotelListPresenter @Inject constructor(view: HotelListContract.View, priva
     }
 
     override fun onItemClick(position: Int) {
-        val hotelModel = hotelModelList[position]
-        view.openDetails(hotelModel.hotelId!!)
+        val hotelModel = hotelModelList.getOrNull(position) ?: return
+        val hotelId = hotelModel.hotelId ?: return
+        view.openDetails(hotelId)
     }
 }
