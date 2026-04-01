@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Toast
 import com.renatoramos.tajawal.R
 import com.renatoramos.tajawal.common.constants.AppConstants
-import com.renatoramos.tajawal.common.extensions.isInternetConnected
 import com.renatoramos.tajawal.common.extensions.makeTextToast
 import com.renatoramos.tajawal.data.model.HotelModel
 import com.renatoramos.tajawal.databinding.ActivityHotelListBinding
@@ -42,16 +41,8 @@ class HotelListActivity : BaseActivity(), HotelListContract.View, HotelListAdapt
         presenter.onStop()
     }
 
-    override fun isInternetConnected(): Boolean {
-        return baseContext.isInternetConnected()
-    }
-
     override fun showError(error: String) {
         baseContext.makeTextToast(error, Toast.LENGTH_LONG).show()
-    }
-
-    override fun showErrorInternetConnection() {
-        baseContext.makeTextToast(getString(R.string.MSG_ERROR_INTERNET_CONNECTION), Toast.LENGTH_LONG).show()
     }
 
     override fun showProgressBar() {

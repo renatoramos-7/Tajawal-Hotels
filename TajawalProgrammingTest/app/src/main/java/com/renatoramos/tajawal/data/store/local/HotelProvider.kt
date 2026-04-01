@@ -5,11 +5,11 @@ import io.paperdb.Paper
 import io.reactivex.Observable
 
 
-class HotelProvider {
+open class HotelProvider {
 
     private val TAG = HotelProvider::class.java.simpleName
 
-    fun add(hotels: List<HotelModel>): Observable<List<HotelModel>> {
+    open fun add(hotels: List<HotelModel>): Observable<List<HotelModel>> {
         return Observable.create<List<HotelModel>> { e ->
             try {
 
@@ -23,28 +23,25 @@ class HotelProvider {
         }
     }
 
-    fun getAll(): Observable<List<HotelModel>> {
-        val hotelList = Paper.book().read<List<HotelModel>>(TAG)
-
-        return if (hotelList != null) {
-            Observable.just<List<HotelModel>>(hotelList)
-        } else {
-            val hotelModelList: List<HotelModel> = listOf()
-            Observable.just(hotelModelList)
+    open fun getAll(): Observable<List<HotelModel>> {
+        return Observable.fromCallable {
+            Paper.book().read<List<HotelModel>>(TAG).orEmpty()
         }
     }
 
-    fun getById(id: Int?): Observable<HotelModel> {
-        val hotelList = Paper.book().read<List<HotelModel>>(TAG)
+    open fun getById(id: Int?): Observable<HotelModel> {
+        return Observable.defer {
+            val hotelList = Paper.book().read<List<HotelModel>>(TAG)
 
-        return if (hotelList != null) {
-             Observable.fromIterable(hotelList).filter { hotel -> hotel.hotelId == id }
-         } else {
-            Observable.empty()
+            if (hotelList != null) {
+                Observable.fromIterable(hotelList).filter { hotel -> hotel.hotelId == id }
+            } else {
+                Observable.empty()
+            }
         }
     }
 
-    fun delete(): Observable<Void> {
+    open fun delete(): Observable<Void> {
         return Observable.create { e ->
             try {
                 Paper.book().delete(TAG)

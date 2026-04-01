@@ -10,20 +10,20 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class HotelsRepository @Inject constructor(private val networkService: NetworkService,
-                                           private val hotelProvider: HotelProvider) {
+open class HotelsRepository @Inject constructor(private val networkService: NetworkService,
+                                                private val hotelProvider: HotelProvider) {
 
-
-    fun getHotelList(): Maybe<List<HotelModel>> {
+    open fun getHotelList(): Maybe<List<HotelModel>> {
         val remote = getHotelListRemote()
+                .onErrorResumeNext(Observable.empty())
         val local = getHotelListLocal()
 
         return Observable.concatArray(remote, local)
                 .filter { list -> list.isNotEmpty() }
-            .firstElement()
+                .firstElement()
     }
 
-    fun getHotelById(hotelId: Int?): Maybe<HotelModel> {
+    open fun getHotelById(hotelId: Int?): Maybe<HotelModel> {
         val local = getHotelByIdLocal(hotelId)
 
         return Observable.concatArray(local)
@@ -45,11 +45,16 @@ class HotelsRepository @Inject constructor(private val networkService: NetworkSe
 
     private fun getHotelListRemote(): Observable<List<HotelModel>> {
         return networkService.getHotels()
-                .cache()
                 .subscribeOn(Schedulers.io())
+                .map { hotels -> hotels.hotel.orEmpty() }
+                .concatMap { hotels ->
+                    if (hotels.isEmpty()) {
+                        Observable.just(hotels)
+                    } else {
+                        hotelProvider.add(hotels)
+                                .onErrorReturnItem(hotels)
+                    }
+                }
                 .observeOn(AndroidSchedulers.mainThread())
-                .concatMap { hotels -> hotelProvider.add(hotels.hotel!!) }
     }
-
-
 }
