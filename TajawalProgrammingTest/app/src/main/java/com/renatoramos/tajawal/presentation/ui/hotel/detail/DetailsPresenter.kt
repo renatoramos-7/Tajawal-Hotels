@@ -9,6 +9,7 @@ class DetailsPresenter @Inject constructor(view: DetailsContract.View, private v
     : BasePresenter<DetailsContract.View>(view), DetailsContract.Presenter {
 
     private var hotelId: Int? = 0
+    private val hotelNotFoundMessage = "Unable to load hotel details."
 
     override fun onStart() {
         view.receiveIntent()
@@ -24,20 +25,33 @@ class DetailsPresenter @Inject constructor(view: DetailsContract.View, private v
     override fun getHotelById() {
         addDisposable(hotelsRepository.getHotelById(hotelId)
                 .subscribe(
-                        { list -> onSuccess(list!!) },
-                        { throwable -> onError(throwable) }
+                        { hotel -> onSuccess(hotel) },
+                        { throwable -> onError(throwable) },
+                        { onError(IllegalStateException(hotelNotFoundMessage)) }
                 ))
     }
 
     override fun onSuccess(hotelModel: HotelModel?) {
-        view.showToolbarTitle(hotelModel!!.summary?.hotelName)
-        view.showImage(hotelModel.image?.get(0)?.url)
-        view.showHotelLocation(hotelModel.location!!.latitude!!, hotelModel.location!!.longitude!!)
-        view.showGoogleMap()
-        view.showHotelName(hotelModel.summary?.hotelName)
-        view.showDiscountPrice(hotelModel.summary?.lowRate.toString(), hotelModel.summary?.highRate.toString())
+        if (hotelModel == null) {
+            onError(IllegalStateException(hotelNotFoundMessage))
+            return
+        }
+
+        val summary = hotelModel.summary
+        val imageUrl = hotelModel.image?.firstOrNull()?.url
+        val latitude = hotelModel.location?.latitude
+        val longitude = hotelModel.location?.longitude
+
+        view.showToolbarTitle(summary?.hotelName)
+        view.showImage(imageUrl)
+        if (latitude != null && longitude != null) {
+            view.showHotelLocation(latitude, longitude)
+            view.showGoogleMap()
+        }
+        view.showHotelName(summary?.hotelName)
+        view.showDiscountPrice(summary?.lowRate?.toString(), summary?.highRate?.toString())
         view.showAddress(hotelModel.location?.address)
-        view.addOnClickHotelImage(hotelModel.image?.get(0)?.url)
+        view.addOnClickHotelImage(imageUrl)
     }
 
     override fun onError(throwable: Throwable) {

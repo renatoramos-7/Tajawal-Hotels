@@ -31,8 +31,8 @@ class HotelListRecyclerAdapter(
         // Just bind View Objects.
         val hotelModel = hotelModelList[position]
 
-        hotelModel.image!![0].url?.let { setupImageView(viewHolder, it) }
-        viewHolder.binding.titleTextView.text = hotelModel.summary!!.hotelName
+        hotelModel.image?.firstOrNull()?.url?.let { setupImageView(viewHolder, it) }
+        viewHolder.binding.titleTextView.text = hotelModel.summary?.hotelName.orEmpty()
     }
 
     private fun setupImageView(holder: HotelListViewHolder, url: String) {
