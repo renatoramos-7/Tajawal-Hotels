@@ -61,6 +61,8 @@ That smaller feature set helps the architecture stay visible. Reviewers can quic
 
 ## Architecture
 
+Architecture diagrams now live in [`docs/architecture/README.md`](docs/architecture/README.md) so the repository keeps visual documentation close to the code in a text-based, review-friendly format.
+
 ### MVP + Repository
 
 The application follows a classic Android MVP approach:
@@ -93,6 +95,16 @@ Dagger 2 is used to wire the app through:
 - dedicated modules for settings, network, repository, provider, and per-screen contracts
 
 This is a traditional setup, but it keeps construction explicit and makes presenter testing straightforward.
+
+### Architecture Diagrams
+
+The repository now includes simple Mermaid diagrams for:
+
+- layered architecture
+- end-to-end MVP data flow
+- presenter-focused test coverage
+
+This keeps the diagrams easy to maintain in pull requests without introducing binary assets or external tooling.
 
 ## Package Structure
 
