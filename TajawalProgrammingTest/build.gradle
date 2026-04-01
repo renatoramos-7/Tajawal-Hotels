@@ -2,16 +2,15 @@
 
 buildscript {
     // kotlin version
-    ext.kotlin_version = '1.4.10'
+    ext.kotlin_version = '1.8.22'
 
     repositories {
         mavenCentral()
         google()
-        jcenter()
         maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:7.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -22,12 +21,11 @@ allprojects {
     repositories {
         mavenCentral()
         google()
-        jcenter()
         maven { url "https://jitpack.io" }
     }
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
 
@@ -37,8 +35,8 @@ project.ext{
     applicationId = "com.renatoramos.tajawal"
     versionCode = 1
     versionName = "1.0"
-    targetSdkVersion = 27
-    compileSdkVersion = 27
+    targetSdkVersion = 34
+    compileSdkVersion = 34
     minSdkVersion = 19
 
     // Google Dependencies.
@@ -68,7 +66,7 @@ project.ext{
     imagezoomLibVersion = "2.3.0"
 
     // PaperDb
-    paperDbLibVersion = "2.6"
+    paperDbLibVersion = "2.7.1"
 
     // Test Dependencies.
     junitLibVersion = "4.12"

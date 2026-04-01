@@ -1,18 +1,31 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    namespace 'com.renatoramos.tajawal'
+    compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
         applicationId rootProject.ext.applicationId
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner rootProject.ext.testInstrumentationRunner
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 
     // I will cut this ok :).
@@ -52,11 +65,15 @@ android {
     }
 
     packagingOptions {
-        exclude 'LICENSE.txt'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
+        resources {
+            excludes += [
+                    'LICENSE.txt',
+                    'META-INF/DEPENDENCIES',
+                    'META-INF/ASL2.0',
+                    'META-INF/NOTICE',
+                    'META-INF/LICENSE'
+            ]
+        }
     }
 
     buildTypes {
@@ -76,8 +93,6 @@ android {
     }
 
     productFlavors {}
-
-    packagingOptions {}
 
 }
 
@@ -129,7 +144,7 @@ dependencies {
     implementation "it.sephiroth.android.library.imagezoom:imagezoom:$rootProject.ext.imagezoomLibVersion" 
 
     // PaperDb
-    implementation "io.paperdb:paperdb:$rootProject.ext.paperDbLibVersion"
+    implementation "io.github.pilgr:paperdb:$rootProject.ext.paperDbLibVersion"
 
     // Test Dependencies.
     // JUnit
