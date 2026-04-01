@@ -1,41 +1,46 @@
 package com.renatoramos.tajawal.hotel.imageviewer
 
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
 import com.renatoramos.tajawal.presentation.ui.hotel.imageviewer.ImageViewerContract
 import com.renatoramos.tajawal.presentation.ui.hotel.imageviewer.ImageViewerPresenter
-import org.junit.Rule
+import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
-import org.mockito.InjectMocks
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnit
 
 class ImageViewerPresenterTest {
 
-    @get:Rule
-    var rule = MockitoJUnit.rule()
-
-    @InjectMocks
     private lateinit var presenter: ImageViewerPresenter
+    private lateinit var view: FakeImageViewerView
 
-    @Mock
-    private lateinit var view: ImageViewerContract.View
-
+    @Before
+    fun setUp() {
+        view = FakeImageViewerView()
+        presenter = ImageViewerPresenter(view)
+    }
 
     @Test
     fun `OnStart`() {
-        // Act
         presenter.onStart()
 
-        verify(view, times(1)).addImageClick()
+        assertEquals(1, view.addImageClickCalls)
     }
 
     @Test
     fun `attachUrl`() {
         presenter.attachUrl("url")
 
-        verify(view, times(1)).loadImage("url")
+        assertEquals("url", view.loadedImageUrl)
     }
 
+    private class FakeImageViewerView : ImageViewerContract.View {
+        var loadedImageUrl: String? = null
+        var addImageClickCalls = 0
 
+        override fun loadImage(url: String) {
+            loadedImageUrl = url
+        }
+
+        override fun addImageClick() {
+            addImageClickCalls++
+        }
+    }
 }
