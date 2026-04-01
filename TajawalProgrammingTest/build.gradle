@@ -39,10 +39,16 @@ project.ext{
     compileSdkVersion = 34
     minSdkVersion = 19
 
-    // Google Dependencies.
-    supportLibVersion = "27.1.0"
+    // AndroidX / Google Dependencies.
+    appCompatLibVersion = "1.6.1"
+    coreLibVersion = "1.12.0"
+    materialLibVersion = "1.11.0"
+    cardViewLibVersion = "1.0.0"
+    recyclerViewLibVersion = "1.3.2"
+    coordinatorLayoutLibVersion = "1.2.0"
+    multidexLibVersion = "2.0.1"
     gsonLibVersion = "2.8.2"
-    constraintLayoutLibVersion = "1.0.2"
+    constraintLayoutLibVersion = "2.1.4"
 
     // Dagger Dependencies.
     daggerLibVersion = "2.15"
@@ -72,8 +78,8 @@ project.ext{
     junitLibVersion = "4.12"
     mockitoLibVersion = "2.16.0"
     mockitoKotlinLibVersion = "1.4.0"
-    testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
-    espressoCoreLibVersion = "3.0.1"
-    supporTestRunner  = "1.0.1"
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    espressoCoreLibVersion = "3.5.1"
+    supporTestRunner  = "1.5.2"
 
 }

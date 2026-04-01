@@ -12,6 +12,7 @@ android {
         targetSdk rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
+        multiDexEnabled true
         testInstrumentationRunner rootProject.ext.testInstrumentationRunner
     }
 
@@ -102,13 +103,15 @@ dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    // Android Dependencies.
-    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibVersion"
-    implementation "com.android.support:support-v4:$rootProject.ext.supportLibVersion"
-    implementation "com.android.support:design:$rootProject.ext.supportLibVersion"
-    implementation "com.android.support:cardview-v7:$rootProject.ext.supportLibVersion"
-    implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportLibVersion"
-    implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintLayoutLibVersion"
+    // AndroidX Dependencies.
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.appCompatLibVersion"
+    implementation "androidx.core:core-ktx:$rootProject.ext.coreLibVersion"
+    implementation "com.google.android.material:material:$rootProject.ext.materialLibVersion"
+    implementation "androidx.cardview:cardview:$rootProject.ext.cardViewLibVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.recyclerViewLibVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$rootProject.ext.coordinatorLayoutLibVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.constraintLayoutLibVersion"
+    implementation "androidx.multidex:multidex:$rootProject.ext.multidexLibVersion"
 
     // Maps
     implementation "com.google.android.gms:play-services-maps:$rootProject.ext.playServicesLibVersion"
@@ -161,8 +164,8 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 
     // Espresso
-    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.supporTestRunner"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoCoreLibVersion"
+    androidTestImplementation "androidx.test:runner:$rootProject.ext.supporTestRunner"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.espressoCoreLibVersion"
 
 
 }
