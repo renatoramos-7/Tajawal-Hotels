@@ -60,21 +60,6 @@ class HotelListPresenterTest {
     @Test
     fun `should get list when internet is online`() {
         // Arrange
-        `when`(view.isInternetConnected()).thenReturn(true)
-        `when`(hotelsRepository.getHotelList()).thenReturn(Maybe.just(hotelModelListMock))
-
-        // Act
-        presenter.getHotelList()
-
-        // Assert
-        verify(view, times(1)).showProgressBar()
-        verify(hotelsRepository, times(1)).getHotelList()
-    }
-
-    @Test
-    fun `should get cached list when internet is offline`() {
-        // Arrange
-        `when`(view.isInternetConnected()).thenReturn(false)
         `when`(hotelsRepository.getHotelList()).thenReturn(Maybe.just(hotelModelListMock))
 
         // Act

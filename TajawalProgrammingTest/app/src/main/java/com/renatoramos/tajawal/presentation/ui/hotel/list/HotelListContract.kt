@@ -12,11 +12,7 @@ interface HotelListContract {
 
         fun showAdapter()
 
-        fun isInternetConnected(): Boolean
-
         fun showError(error: String)
-
-        fun showErrorInternetConnection()
 
         fun showProgressBar()
 
