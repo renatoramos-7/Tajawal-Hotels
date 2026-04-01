@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.support.v7.widget.Toolbar
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -11,6 +12,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
+import android.widget.ImageView
 import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -23,10 +25,9 @@ import com.renatoramos.tajawal.R
 import com.renatoramos.tajawal.common.constants.AppConstants
 import com.renatoramos.tajawal.common.extensions.loadWithGlide
 import com.renatoramos.tajawal.common.extensions.makeTextToast
+import com.renatoramos.tajawal.databinding.ActivityDetailBinding
 import com.renatoramos.tajawal.presentation.base.BaseActivity
 import com.renatoramos.tajawal.presentation.ui.hotel.imageviewer.ImageViewerActivity
-import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.toolbar_base_with_back.*
 import javax.inject.Inject
 
 class DetailsActivity : BaseActivity(), DetailsContract.View, OnMapReadyCallback {
@@ -34,11 +35,13 @@ class DetailsActivity : BaseActivity(), DetailsContract.View, OnMapReadyCallback
     @Inject
     lateinit var presenter: DetailsPresenter
 
+    private lateinit var binding: ActivityDetailBinding
     private lateinit var latLng: LatLng
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initialize()
     }
 
@@ -64,22 +67,22 @@ class DetailsActivity : BaseActivity(), DetailsContract.View, OnMapReadyCallback
     }
 
     override fun showGoogleMap() {
-        with(mapView) {
+        with(binding.mapView) {
             onCreate(null)
             getMapAsync(this@DetailsActivity)
         }
     }
 
     override fun showImage(url: String?) {
-        url?.let { hotelImageView.loadWithGlide(it) }
+        url?.let { binding.root.findViewById<ImageView>(R.id.hotelImageView).loadWithGlide(it) }
     }
 
     override fun showToolbarTitle(title: String?) {
-        toolbarBaseWithBack.title = title
+        binding.root.findViewById<Toolbar>(R.id.toolbarBaseWithBack).title = title
     }
 
     override fun showHotelName(hotelName: String?) {
-        hotelNameTextView.text = hotelName
+        binding.hotelNameTextView.text = hotelName
     }
 
     override fun showError(error: String) {
@@ -104,15 +107,15 @@ class DetailsActivity : BaseActivity(), DetailsContract.View, OnMapReadyCallback
         spannableStringBuilder.append(getString(R.string.HOTEL_PRICE_SUGGESTED))
         spannableStringBuilder.append(" €")
         spannableStringBuilder.append(strikeHighRate)
-        priceTextView.text = spannableStringBuilder
+        binding.priceTextView.text = spannableStringBuilder
     }
 
     override fun showAddress(address: String?) {
-        addressTextView.text = address
+        binding.addressTextView.text = address
     }
 
     override fun addOnClickHotelImage(imageUrl: String?) {
-        hotelImageView.setOnClickListener({
+        binding.root.findViewById<ImageView>(R.id.hotelImageView).setOnClickListener({
             val intent = Intent(this, ImageViewerActivity::class.java)
             intent.putExtra(AppConstants.IMAGE_URL, imageUrl)
             startActivity(intent)
@@ -128,13 +131,13 @@ class DetailsActivity : BaseActivity(), DetailsContract.View, OnMapReadyCallback
     }
 
     override fun setToolbar() {
-        setSupportActionBar(toolbarBaseWithBack)
+        setSupportActionBar(binding.root.findViewById(R.id.toolbarBaseWithBack))
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
     }
 
     override fun addOnClickToolbar() {
-        toolbarBaseWithBack.setNavigationOnClickListener({ finish() })
+        binding.root.findViewById<Toolbar>(R.id.toolbarBaseWithBack).setNavigationOnClickListener({ finish() })
     }
 
     private fun initialize() {

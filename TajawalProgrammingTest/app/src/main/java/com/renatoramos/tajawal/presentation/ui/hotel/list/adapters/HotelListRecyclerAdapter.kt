@@ -9,7 +9,6 @@ import com.renatoramos.tajawal.common.extensions.inflate
 import com.renatoramos.tajawal.common.extensions.loadWithGlide
 import com.renatoramos.tajawal.common.ui.components.DrawableRequestListener
 import com.renatoramos.tajawal.data.model.HotelModel
-import kotlinx.android.synthetic.main.hotel_viewholder.view.*
 
 class HotelListRecyclerAdapter (private val context: Context, private val hotelModelList: List<HotelModel>, private val hotelListAdapterListener: HotelListAdapterListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -22,7 +21,7 @@ class HotelListRecyclerAdapter (private val context: Context, private val hotelM
     }
 
     override fun getItemCount(): Int {
-        return hotelModelList?.size
+        return hotelModelList.size
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
@@ -35,9 +34,9 @@ class HotelListRecyclerAdapter (private val context: Context, private val hotelM
     }
 
     private fun setupImageView(holder: HotelListViewHolder, url: String) {
-        holder.itemView.placeGuideImageView.loadWithGlide(url, object : DrawableRequestListener() {
+        holder.placeGuideImageView?.loadWithGlide(url, object : DrawableRequestListener() {
             override fun onResourceReady(bitmap: Bitmap){
-                holder.itemView.placeGuideImageView.setRatio(bitmap.width.toFloat() / bitmap.height)
+                holder.placeGuideImageView?.setRatio(bitmap.width.toFloat() / bitmap.height)
             }
         })
     }
