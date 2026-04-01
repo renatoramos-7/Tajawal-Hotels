@@ -61,6 +61,8 @@ Esse conjunto menor de funcionalidades ajuda a arquitetura a permanecer visível
 
 ## Arquitetura
 
+Os diagramas de arquitetura agora ficam em [`docs/architecture/README.md`](docs/architecture/README.md), mantendo a documentação visual perto do código em um formato textual simples de revisar e atualizar.
+
 ### MVP + Repository
 
 A aplicação segue uma abordagem clássica de MVP em Android:
@@ -93,6 +95,16 @@ O Dagger 2 é usado para conectar a aplicação por meio de:
 - módulos dedicados para settings, rede, repository, provider e contratos por tela
 
 É uma configuração tradicional, mas mantém a construção de objetos explícita e facilita bastante os testes de presenter.
+
+### Diagramas de Arquitetura
+
+O repositório agora inclui diagramas Mermaid simples para:
+
+- arquitetura em camadas
+- fluxo ponta a ponta no MVP
+- cobertura de testes focada nos presenters
+
+Com isso, os diagramas continuam fáceis de manter em pull requests, sem depender de imagens binárias ou ferramentas externas.
 
 ## Estrutura de Pacotes
 
