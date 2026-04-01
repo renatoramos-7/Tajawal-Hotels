@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -12,7 +11,6 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
-import android.widget.ImageView
 import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -26,6 +24,7 @@ import com.renatoramos.tajawal.common.constants.AppConstants
 import com.renatoramos.tajawal.common.extensions.loadWithGlide
 import com.renatoramos.tajawal.common.extensions.makeTextToast
 import com.renatoramos.tajawal.databinding.ActivityDetailBinding
+import com.renatoramos.tajawal.databinding.ToolbarBaseWithBackBinding
 import com.renatoramos.tajawal.presentation.base.BaseActivity
 import com.renatoramos.tajawal.presentation.ui.hotel.imageviewer.ImageViewerActivity
 import javax.inject.Inject
@@ -36,12 +35,14 @@ class DetailsActivity : BaseActivity(), DetailsContract.View, OnMapReadyCallback
     lateinit var presenter: DetailsPresenter
 
     private lateinit var binding: ActivityDetailBinding
+    private lateinit var toolbarBinding: ToolbarBaseWithBackBinding
     private lateinit var latLng: LatLng
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        toolbarBinding = ToolbarBaseWithBackBinding.bind(binding.root)
         initialize()
     }
 
@@ -74,11 +75,11 @@ class DetailsActivity : BaseActivity(), DetailsContract.View, OnMapReadyCallback
     }
 
     override fun showImage(url: String?) {
-        url?.let { binding.root.findViewById<ImageView>(R.id.hotelImageView).loadWithGlide(it) }
+        url?.let { toolbarBinding.hotelImageView.loadWithGlide(it) }
     }
 
     override fun showToolbarTitle(title: String?) {
-        binding.root.findViewById<Toolbar>(R.id.toolbarBaseWithBack).title = title
+        toolbarBinding.toolbarBaseWithBack.title = title
     }
 
     override fun showHotelName(hotelName: String?) {
@@ -115,7 +116,7 @@ class DetailsActivity : BaseActivity(), DetailsContract.View, OnMapReadyCallback
     }
 
     override fun addOnClickHotelImage(imageUrl: String?) {
-        binding.root.findViewById<ImageView>(R.id.hotelImageView).setOnClickListener({
+        toolbarBinding.hotelImageView.setOnClickListener({
             val intent = Intent(this, ImageViewerActivity::class.java)
             intent.putExtra(AppConstants.IMAGE_URL, imageUrl)
             startActivity(intent)
@@ -131,13 +132,13 @@ class DetailsActivity : BaseActivity(), DetailsContract.View, OnMapReadyCallback
     }
 
     override fun setToolbar() {
-        setSupportActionBar(binding.root.findViewById(R.id.toolbarBaseWithBack))
+        setSupportActionBar(toolbarBinding.toolbarBaseWithBack)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
     }
 
     override fun addOnClickToolbar() {
-        binding.root.findViewById<Toolbar>(R.id.toolbarBaseWithBack).setNavigationOnClickListener({ finish() })
+        toolbarBinding.toolbarBaseWithBack.setNavigationOnClickListener({ finish() })
     }
 
     private fun initialize() {

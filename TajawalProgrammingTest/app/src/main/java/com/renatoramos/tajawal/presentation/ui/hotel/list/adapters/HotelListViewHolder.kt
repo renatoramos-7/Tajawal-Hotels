@@ -1,13 +1,6 @@
 package com.renatoramos.tajawal.presentation.ui.hotel.list.adapters
 
 import androidx.recyclerview.widget.RecyclerView
-import android.view.View
-import android.widget.TextView
-import com.renatoramos.tajawal.R
-import com.renatoramos.tajawal.common.ui.widgets.ResizableImageView
+import com.renatoramos.tajawal.databinding.HotelViewholderBinding
 
-class HotelListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    val placeGuideImageView by lazy { itemView.findViewById<ResizableImageView>(R.id.placeGuideImageView) }
-    val titleTextView by lazy { itemView.findViewById<TextView>(R.id.titleTextView) }
-}
+class HotelListViewHolder(val binding: HotelViewholderBinding) : RecyclerView.ViewHolder(binding.root)

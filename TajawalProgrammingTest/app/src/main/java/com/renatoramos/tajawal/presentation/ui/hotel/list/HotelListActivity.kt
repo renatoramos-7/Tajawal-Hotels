@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import com.renatoramos.tajawal.R
 import com.renatoramos.tajawal.common.constants.AppConstants
@@ -13,6 +12,7 @@ import com.renatoramos.tajawal.common.extensions.isInternetConnected
 import com.renatoramos.tajawal.common.extensions.makeTextToast
 import com.renatoramos.tajawal.data.model.HotelModel
 import com.renatoramos.tajawal.databinding.ActivityHotelListBinding
+import com.renatoramos.tajawal.databinding.ToolbarBaseWithTitleBinding
 import com.renatoramos.tajawal.presentation.base.BaseActivity
 import com.renatoramos.tajawal.presentation.ui.hotel.detail.DetailsActivity
 import com.renatoramos.tajawal.presentation.ui.hotel.list.adapters.HotelListAdapterListener
@@ -26,12 +26,14 @@ class HotelListActivity : BaseActivity(), HotelListContract.View, HotelListAdapt
     lateinit var presenter: HotelListPresenter
 
     private lateinit var binding: ActivityHotelListBinding
+    private lateinit var toolbarBinding: ToolbarBaseWithTitleBinding
     private lateinit var hotelListRecyclerAdapter: HotelListRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHotelListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        toolbarBinding = ToolbarBaseWithTitleBinding.bind(binding.root)
         initialize()
     }
 
@@ -70,9 +72,8 @@ class HotelListActivity : BaseActivity(), HotelListContract.View, HotelListAdapt
     
     override fun createAdapter(hotelModelList: List<HotelModel>) {
         hotelListRecyclerAdapter = HotelListRecyclerAdapter(
-                baseContext,
-                hotelModelList,
-                this
+            hotelModelList,
+            this
         )
     }
 
@@ -92,7 +93,7 @@ class HotelListActivity : BaseActivity(), HotelListContract.View, HotelListAdapt
     }
 
     override fun setToolbar() {
-        binding.root.findViewById<TextView>(R.id.toolbarTitleTextView).text = getString(R.string.HOTEL_LIST_TITLE)
+        toolbarBinding.toolbarTitleTextView.text = getString(R.string.HOTEL_LIST_TITLE)
     }
 
     private fun initialize() {
