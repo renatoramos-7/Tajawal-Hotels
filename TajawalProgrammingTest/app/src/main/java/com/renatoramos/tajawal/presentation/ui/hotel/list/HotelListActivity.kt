@@ -31,7 +31,7 @@ class HotelListActivity : BaseActivity(), HotelListContract.View, HotelListAdapt
         super.onCreate(savedInstanceState)
         binding = ActivityHotelListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        toolbarBinding = ToolbarBaseWithTitleBinding.bind(binding.root)
+        toolbarBinding = binding.toolbarLayout
         initialize()
     }
 

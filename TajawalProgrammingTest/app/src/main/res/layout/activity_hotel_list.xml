@@ -7,7 +7,9 @@
     android:orientation="vertical"
     tools:context=".presentation.ui.hotel.list.HotelListActivity">
 
-    <include layout="@layout/toolbar_base_with_title" />
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/toolbar_base_with_title" />
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
