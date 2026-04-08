@@ -2,7 +2,7 @@
 
 buildscript {
     // kotlin version
-    ext.kotlin_version = '1.8.22'
+    ext.kotlin_version = '1.9.24'
 
     repositories {
         mavenCentral()
@@ -10,7 +10,7 @@ buildscript {
         maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:8.5.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -41,43 +41,44 @@ project.ext{
 
     // AndroidX / Google Dependencies.
     appCompatLibVersion = "1.6.1"
-    coreLibVersion = "1.12.0"
-    materialLibVersion = "1.11.0"
+    coreLibVersion = "1.13.1"
+    materialLibVersion = "1.12.0"
     cardViewLibVersion = "1.0.0"
     recyclerViewLibVersion = "1.3.2"
     coordinatorLayoutLibVersion = "1.2.0"
     multidexLibVersion = "2.0.1"
-    gsonLibVersion = "2.8.2"
+    gsonLibVersion = "2.10.1"
     constraintLayoutLibVersion = "2.1.4"
 
     // Dagger Dependencies.
-    daggerLibVersion = "2.15"
+    daggerLibVersion = "2.51.1"
 
     // Maps
-    playServicesLibVersion = "12.0.1"
+    playServicesLibVersion = "18.2.0"
 
     // Image cache"
-    glideLibVersion = "4.6.1"
+    glideLibVersion = "4.16.0"
 
     // ReactiveX Dependencies.
-    rxandroidLibVersion = "2.0.2"
-    rxjavaLibVersion = "2.1.10"
-    rxjavaAdapterLibVersion = "2.4.0"
+    rxandroidLibVersion = "2.1.1"
+    rxjavaLibVersion = "2.2.21"
+    rxjavaAdapterLibVersion = "2.11.0"
 
     // Square Dependencies.
-    retrofit2LibVersion = "2.3.0"
-    okhttp3LibVersion = "3.10.0"
+    retrofit2LibVersion = "2.11.0"
+    okhttp3LibVersion = "4.12.0"
 
     //Image Zoom
     imagezoomLibVersion = "2.3.0"
 
     // PaperDb
-    paperDbLibVersion = "2.7.1"
+    paperDbLibVersion = "2.7.2"
 
     // Test Dependencies.
-    junitLibVersion = "4.12"
-    mockitoLibVersion = "2.16.0"
-    mockitoKotlinLibVersion = "1.4.0"
+    junitLibVersion = "4.13.2"
+    mockitoLibVersion = "5.12.0"
+    mockitoInlineLibVersion = "5.2.0"
+    mockitoKotlinLibVersion = "5.4.0"
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     espressoCoreLibVersion = "3.5.1"
     supporTestRunner  = "1.5.2"

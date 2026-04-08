@@ -6,11 +6,11 @@ import com.renatoramos.tajawal.common.di.DaggerAppComponent
 import com.renatoramos.tajawal.common.di.module.ApplicationModule
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
+import dagger.android.HasAndroidInjector
 import io.paperdb.Paper
 import javax.inject.Inject
 
-class MainApplication : MultiDexApplication(), HasActivityInjector {
+class MainApplication : MultiDexApplication(), HasAndroidInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
@@ -20,8 +20,9 @@ class MainApplication : MultiDexApplication(), HasActivityInjector {
         init()
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> {
-        return dispatchingAndroidInjector
+    @Suppress("UNCHECKED_CAST")
+    override fun androidInjector(): AndroidInjector<Any> {
+        return dispatchingAndroidInjector as AndroidInjector<Any>
     }
 
 

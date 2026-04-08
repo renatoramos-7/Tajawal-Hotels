@@ -51,10 +51,10 @@ class DetailsActivity : BaseActivity(), DetailsContract.View, OnMapReadyCallback
         presenter.onStop()
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
+    override fun onMapReady(googleMap: GoogleMap) {
         MapsInitializer.initialize(this)
 
-        if (googleMap != null && this::latLng.isInitialized) {
+        if (this::latLng.isInitialized) {
             with(googleMap) {
                 moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13f))
                 addMarker(MarkerOptions().position(latLng))
