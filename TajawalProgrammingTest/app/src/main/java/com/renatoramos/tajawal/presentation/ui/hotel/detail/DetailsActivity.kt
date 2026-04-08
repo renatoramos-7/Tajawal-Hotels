@@ -31,24 +31,64 @@ import javax.inject.Inject
 
 class DetailsActivity : BaseActivity(), DetailsContract.View, OnMapReadyCallback {
 
+    companion object {
+        private const val MAP_VIEW_BUNDLE_KEY = "map_view_bundle"
+    }
+
     @Inject
     lateinit var presenter: DetailsPresenter
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var toolbarBinding: ToolbarBaseWithBackBinding
     private lateinit var latLng: LatLng
+    private var mapViewBundle: Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         toolbarBinding = ToolbarBaseWithBackBinding.bind(binding.root)
+        mapViewBundle = savedInstanceState?.getBundle(MAP_VIEW_BUNDLE_KEY)
         initialize()
     }
 
+    override fun onStart() {
+        super.onStart()
+        binding.mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.mapView.onResume()
+    }
+
+    override fun onPause() {
+        binding.mapView.onPause()
+        super.onPause()
+    }
+
     override fun onStop() {
+        binding.mapView.onStop()
         super.onStop()
         presenter.onStop()
+    }
+
+    override fun onDestroy() {
+        binding.mapView.onDestroy()
+        super.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        binding.mapView.onLowMemory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val mapState = outState.getBundle(MAP_VIEW_BUNDLE_KEY) ?: Bundle().also {
+            outState.putBundle(MAP_VIEW_BUNDLE_KEY, it)
+        }
+        binding.mapView.onSaveInstanceState(mapState)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -69,7 +109,7 @@ class DetailsActivity : BaseActivity(), DetailsContract.View, OnMapReadyCallback
 
     override fun showGoogleMap() {
         with(binding.mapView) {
-            onCreate(null)
+            onCreate(mapViewBundle)
             getMapAsync(this@DetailsActivity)
         }
     }
@@ -133,8 +173,8 @@ class DetailsActivity : BaseActivity(), DetailsContract.View, OnMapReadyCallback
 
     override fun setToolbar() {
         setSupportActionBar(toolbarBinding.toolbarBaseWithBack)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     override fun addOnClickToolbar() {

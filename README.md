@@ -35,10 +35,11 @@ That smaller feature set helps the architecture stay visible. Reviewers can quic
 
 - Kotlin 1.9.24
 - Android Gradle Plugin 8.5.2
+- Gradle 8.7 wrapper
 - Single Android application module
 - `minSdkVersion 19`
-- `targetSdkVersion 27`
-- Android Support Libraries (pre-AndroidX)
+- `targetSdkVersion 34`
+- AndroidX libraries
 
 ### Architecture and Infrastructure
 
@@ -65,7 +66,7 @@ That smaller feature set helps the architecture stay visible. Reviewers can quic
 This repository is intentionally documented as a well-maintained legacy Android sample, not as a fully migrated modern Android template.
 
 - MVP was kept on purpose because it still matches the current app size and keeps responsibilities explicit
-- compatibility remains anchored in the existing stack, including `minSdkVersion 19`, `targetSdkVersion 27`, and the pre-AndroidX support library baseline already present in the codebase
+- compatibility remains anchored in the existing stack, including `minSdkVersion 19`, `targetSdkVersion 34`, and an updated but still intentionally compact AndroidX baseline
 - modernization is framed as incremental maintenance, not as a claim that the project already reflects the latest Android platform conventions
 
 That positioning matters for accuracy: the repository shows sound engineering judgment, not cosmetic modernization claims.
@@ -213,8 +214,20 @@ Screenshots live in the [`design/`](design) folder.
 ### Requirements
 
 - Android Studio current stable release
-- Android SDK 34
-- JDK 17 or newer
+- Android SDK Platform 34 installed
+- JDK 17
+
+### Quick Start
+
+From the repository root:
+
+```bash
+cd TajawalProgrammingTest
+./gradlew assembleDebug
+./gradlew testDebugUnitTest
+```
+
+The generated debug APK is created at `TajawalProgrammingTest/app/build/outputs/apk/debug/`.
 
 ### Local Setup
 
@@ -223,9 +236,23 @@ cd TajawalProgrammingTest
 ./gradlew assembleDebug
 ```
 
-Then run the `app` configuration from Android Studio on an emulator or physical device.
+Then open `TajawalProgrammingTest` in Android Studio and run the `app` configuration on an emulator or physical device.
 
-The project was validated with the Android Studio bundled JDK (`jbr`) and builds successfully with `assembleDebug` and `testDebugUnitTest`.
+For a clean first run in Android Studio:
+
+1. Let Android Studio trust the Gradle wrapper and sync the project.
+2. If prompted, use the bundled JDK from Android Studio (`jbr`) or any JDK 17 installation.
+3. Install Android SDK Platform 34 if the IDE reports it as missing.
+4. Run the `app` configuration.
+
+No extra environment variables, local secrets, or manual project file edits are required for a standard debug build.
+
+The project was validated with the Android Studio bundled JDK (`jbr`) and builds successfully with both `assembleDebug` and `testDebugUnitTest`.
+
+### Known Runtime Notes
+
+- Hotel data is fetched from the configured remote endpoint, so the list screen expects internet access.
+- The details screen includes a Google Map view; if Google Play services are unavailable on the device or emulator, the rest of the screen still remains usable.
 
 ## Trade-offs
 
@@ -253,13 +280,11 @@ This project is intentionally presented as a well-structured legacy Android samp
 
 The goal of this repository is not to migrate architecture. The most responsible path remains incremental modernization while preserving MVP + Repository:
 
-1. Migrate Support Libraries to AndroidX.
-2. Upgrade Gradle, Kotlin, and library versions.
-3. Replace Kotlin synthetics with View Binding.
-4. Refine UI state handling for loading, success, and error rendering.
-5. Strengthen repository semantics around cache fallback and failure cases.
-6. Add repository-level tests and a few higher-value UI/instrumentation tests.
-7. Consider modularization only if the scope grows enough to justify it.
+1. Keep dependency updates incremental and compatibility-focused instead of bundling them into a broad rewrite.
+2. Refine UI state handling for loading, success, and error rendering.
+3. Strengthen repository semantics around cache fallback and failure cases.
+4. Add repository-level tests and a few higher-value UI/instrumentation tests.
+5. Consider modularization only if the scope grows enough to justify it.
 
 The important point is architectural restraint: this project is intentionally kept in MVP so it can demonstrate maintenance and improvement of an existing pattern, not an unnecessary rewrite.
 

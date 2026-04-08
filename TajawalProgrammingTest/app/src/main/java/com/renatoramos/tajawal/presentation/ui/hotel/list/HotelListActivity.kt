@@ -2,7 +2,6 @@ package com.renatoramos.tajawal.presentation.ui.hotel.list
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import android.view.View
 import android.widget.Toast
@@ -79,7 +78,6 @@ class HotelListActivity : BaseActivity(), HotelListContract.View, HotelListAdapt
     }
 
     override fun setupRecyclerView() {
-        binding.mainRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.mainRecyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
     }
 
