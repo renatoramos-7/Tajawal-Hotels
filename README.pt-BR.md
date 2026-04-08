@@ -32,12 +32,13 @@ Esse conjunto menor de funcionalidades ajuda a arquitetura a permanecer visível
 
 ### Core
 
-- Kotlin 1.4.10
-- Android Gradle Plugin 4.1.0
+- Kotlin 1.9.24
+- Android Gradle Plugin 8.5.2
+- Gradle Wrapper 8.7
 - Aplicação Android com módulo único
 - `minSdkVersion 19`
-- `targetSdkVersion 27`
-- Android Support Libraries (pré-AndroidX)
+- `targetSdkVersion 34`
+- Bibliotecas AndroidX
 
 ### Arquitetura e Infraestrutura
 
@@ -169,6 +170,7 @@ Os testes cobertos incluem:
 - `HotelListPresenterTest`
 - `DetailsPresenterTest`
 - `ImageViewerPresenterTest`
+- `HotelsRepositoryTest`
 
 Esses testes validam preocupações como:
 
@@ -200,9 +202,21 @@ As screenshots estão na pasta [`design/`](design).
 
 ### Requisitos
 
-- Android Studio
-- Android SDK 27
-- JDK compatível com Gradle e AGP 4.1.0
+- Android Studio em versão stable atual
+- Android SDK Platform 34 instalado
+- JDK 17
+
+### Início Rápido
+
+A partir da raiz do repositório:
+
+```bash
+cd TajawalProgrammingTest
+./gradlew assembleDebug
+./gradlew testDebugUnitTest
+```
+
+O APK de debug é gerado em `TajawalProgrammingTest/app/build/outputs/apk/debug/`.
 
 ### Setup Local
 
@@ -211,7 +225,23 @@ cd TajawalProgrammingTest
 ./gradlew assembleDebug
 ```
 
-Depois, basta executar a configuração `app` pelo Android Studio em um emulador ou dispositivo físico.
+Depois, abra `TajawalProgrammingTest` no Android Studio e execute a configuração `app` em um emulador ou dispositivo físico.
+
+Para um primeiro run sem atrito no Android Studio:
+
+1. Permita que o Android Studio use o Gradle Wrapper do projeto e faça o sync.
+2. Se a IDE solicitar, use o JDK embarcado do Android Studio (`jbr`) ou qualquer instalação de JDK 17.
+3. Instale o Android SDK Platform 34 se ele ainda não estiver disponível localmente.
+4. Execute a configuração `app`.
+
+Não é necessário configurar variáveis de ambiente extras, segredos locais ou editar arquivos do projeto manualmente para um build de debug padrão.
+
+O projeto foi validado localmente com o JDK embarcado do Android Studio (`jbr`) e está passando em `assembleDebug` e `testDebugUnitTest`.
+
+### Notas de Execução
+
+- A lista de hotéis depende do endpoint remoto configurado, então a tela inicial precisa de acesso à internet.
+- A tela de detalhes usa Google Maps; se o dispositivo ou emulador não tiver Google Play services, o restante da tela continua funcional.
 
 ## Trade-offs
 
@@ -228,8 +258,6 @@ Este projeto é apresentado intencionalmente como uma amostra bem estruturada de
 
 ### Trade-offs
 
-- Usa Android Support Libraries em vez de AndroidX
-- Usa Kotlin Android synthetics em vez de View Binding
 - Mantém tudo em um único módulo, então os limites são organizacionais e não impostos pelo build
 - Depende de RxJava 2 em vez de coroutines e Flow
 - A estratégia de cache é intencionalmente simples e não tenta sincronização offline completa
@@ -239,13 +267,11 @@ Este projeto é apresentado intencionalmente como uma amostra bem estruturada de
 
 O objetivo deste repositório não é migrar a arquitetura. Se esta base evoluísse hoje, o caminho mais responsável seria uma modernização incremental, preservando MVP + Repository:
 
-1. Migrar de Support Libraries para AndroidX.
-2. Atualizar Gradle, Kotlin e versões das bibliotecas.
-3. Substituir Kotlin synthetics por View Binding.
-4. Refinar o tratamento de estado de UI para carregamento, sucesso e erro.
-5. Fortalecer a semântica do repository em relação a fallback de cache e cenários de falha.
-6. Adicionar testes no nível de repository e alguns testes de UI/instrumentação de maior valor.
-7. Considerar modularização apenas se o escopo crescer o suficiente para justificar isso.
+1. Manter atualizações de dependência incrementais e orientadas à compatibilidade, sem embutir isso em uma reescrita ampla.
+2. Refinar o tratamento de estado de UI para carregamento, sucesso e erro.
+3. Fortalecer a semântica do repository em relação a fallback de cache e cenários de falha.
+4. Adicionar testes no nível de repository e alguns testes de UI/instrumentação de maior valor.
+5. Considerar modularização apenas se o escopo crescer o suficiente para justificar isso.
 
 O ponto principal aqui é a disciplina arquitetural: o projeto permanece intencionalmente em MVP para demonstrar manutenção e melhoria de um padrão existente, e não uma reescrita desnecessária.
 
