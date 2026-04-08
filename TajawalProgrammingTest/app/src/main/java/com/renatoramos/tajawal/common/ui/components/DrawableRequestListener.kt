@@ -14,23 +14,30 @@ abstract class DrawableRequestListener : RequestListener<Drawable> {
 
     abstract fun onResourceReady(bitmap: Bitmap)
 
-        override fun onLoadFailed(e: GlideException?, model: Any,
-                                  target: Target<Drawable>, isFirstResource: Boolean
-        ): Boolean {
-            return false
-        }
+    override fun onLoadFailed(
+        e: GlideException?,
+        model: Any?,
+        target: Target<Drawable>,
+        isFirstResource: Boolean
+    ): Boolean {
+        return false
+    }
 
-        override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>,
-                                     dataSource: DataSource, isFirstResource: Boolean
-        ): Boolean {
-            onResourceReady(getBitmap(resource))
-            return false
-        }
+    override fun onResourceReady(
+        resource: Drawable,
+        model: Any,
+        target: Target<Drawable>?,
+        dataSource: DataSource,
+        isFirstResource: Boolean
+    ): Boolean {
+        onResourceReady(getBitmap(resource))
+        return false
+    }
 
-        private fun getBitmap(drawable: Drawable): Bitmap {
-            return when (drawable) {
-                is BitmapDrawable -> drawable.bitmap
-                else -> (drawable as GifDrawable).firstFrame
-            }
+    private fun getBitmap(drawable: Drawable): Bitmap {
+        return when (drawable) {
+            is BitmapDrawable -> drawable.bitmap
+            else -> (drawable as GifDrawable).firstFrame
         }
     }
+}

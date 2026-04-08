@@ -33,8 +33,8 @@ That smaller feature set helps the architecture stay visible. Reviewers can quic
 
 ### Core
 
-- Kotlin 1.4.10
-- Android Gradle Plugin 4.1.0
+- Kotlin 1.9.24
+- Android Gradle Plugin 8.5.2
 - Single Android application module
 - `minSdkVersion 19`
 - `targetSdkVersion 27`
@@ -212,9 +212,9 @@ Screenshots live in the [`design/`](design) folder.
 
 ### Requirements
 
-- Android Studio
-- Android SDK 27
-- JDK compatible with Gradle and AGP 4.1.0
+- Android Studio current stable release
+- Android SDK 34
+- JDK 17 or newer
 
 ### Local Setup
 
@@ -224,6 +224,8 @@ cd TajawalProgrammingTest
 ```
 
 Then run the `app` configuration from Android Studio on an emulator or physical device.
+
+The project was validated with the Android Studio bundled JDK (`jbr`) and builds successfully with `assembleDebug` and `testDebugUnitTest`.
 
 ## Trade-offs
 
